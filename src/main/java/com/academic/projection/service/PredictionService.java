@@ -18,13 +18,13 @@ public class PredictionService {
 
     @Autowired
     private PredictionRepository predictionRepository;
-
+    /*
     @Autowired
     private Environment environment;
-
+    */
 
     public List<Prediction> getAllPredictions() {
-        try {
+        /*try {
             ResultSet resultSet = executeQuery("SELECT IDACTIVIDAD, DESCRIPCIONLARGA" +
                     " FROM CONFIGURACION.CON_ACTIVIDAD" +
                     " INNER JOIN CONFIGURACION.CON_CURSO" +
@@ -34,11 +34,11 @@ public class PredictionService {
             return predictionRepository.findAll();
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
             return predictionRepository.findAll();
-        }
+        }*/
+        return predictionRepository.findAll();
     }
-
+    /*
     public ResultSet executeQuery(String sql) throws SQLException {
 
         Connection connection = DriverManager.getConnection(
@@ -56,5 +56,5 @@ public class PredictionService {
 
         connection.close();
         return resultSet;
-    }
+    }*/
 }

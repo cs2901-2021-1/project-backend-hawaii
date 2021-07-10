@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/viewers")
+@CrossOrigin
 public class ViewerController {
     @Autowired
     private PredictionService predictionService;

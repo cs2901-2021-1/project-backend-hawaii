@@ -14,7 +14,7 @@ public class ViewerController {
     @Autowired
     private PredictionService predictionService;
 
-    @GetMapping
+    @GetMapping("/view")
     @ResponseBody
     public List<Prediction> getAllPrediction(){
         return predictionService.getAllPredictions();

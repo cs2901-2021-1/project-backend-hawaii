@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import static com.academic.projection.config.GlobalConstants.*;
 
 @Entity
@@ -29,6 +32,13 @@ public class Prediction {
         this.name = name;
         this.nStudent = nStudent;
         this.error = error;
+    }
+
+    public Prediction(ResultSet resultSet) throws SQLException {
+        this.code = resultSet.getString("IDACTIVIDAD");
+        this.name = resultSet.getString("DESCRIPCIONLARGA");
+        this.nStudent = 0;
+        this.error = 0;
     }
 
     public String getCode() {

@@ -25,7 +25,8 @@ public class Prediction {
     @Column(name = "error")
     private double error;
 
-    public Prediction() { }
+    public Prediction() {
+    }
 
     public Prediction(String code, String name, int nStudent, double error) {
         this.code = code;

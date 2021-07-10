@@ -8,6 +8,6 @@ class ProjectionApplicationTests {
 
     @Test
     void contextLoads() {
-    }
 
+    }
 }

@@ -1,4 +1,4 @@
-package com.academic.projection.data.entities;
+package data.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,8 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import static config.GlobalConstants.CODE_CURSO_LENGTH;
 
-import static com.academic.projection.config.GlobalConstants.*;
 
 @Entity
 @Table(name = "courses")

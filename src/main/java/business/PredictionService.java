@@ -1,11 +1,16 @@
-package com.academic.projection.service;
+package business;
 
-import com.academic.projection.data.entities.Prediction;
-import com.academic.projection.repository.PredictionRepository;
+import business.custom_exceptions.CustomNotFoundException;
+import business.custom_exceptions.TooLongException;
+import data.dtos.PredictionDTO;
+import data.entities.Prediction;
+import data.repositories.PredictionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
 
 import javax.transaction.Transactional;
 import java.sql.*;
@@ -18,27 +23,21 @@ public class PredictionService {
 
     @Autowired
     private PredictionRepository predictionRepository;
-    /*
+
     @Autowired
     private Environment environment;
-    */
+
 
     public List<Prediction> getAllPredictions() {
-        /*try {
-            ResultSet resultSet = executeQuery("SELECT IDACTIVIDAD, DESCRIPCIONLARGA" +
-                    " FROM CONFIGURACION.CON_ACTIVIDAD" +
-                    " INNER JOIN CONFIGURACION.CON_CURSO" +
-                    " ON CONFIGURACION.CON_ACTIVIDAD.CODACTIVIDAD = CONFIGURACION.CON_CURSO.CODCURSO" +
-                    " WHERE CONFIGURACION.CON_ACTIVIDAD.isdeleted = 'N'");
-
+        try {
+            ResultSet resultSet = executeQuery("SELECT IDACTIVIDAD, DESCRIPCIONLARGA FROM CONFIGURACION.CON_ACTIVIDAD INNER JOIN CONFIGURACION.CON_CURSO ON CONFIGURACION.CON_ACTIVIDAD.CODACTIVIDAD = CONFIGURACION.CON_CURSO.CODCURSO WHERE CONFIGURACION.CON_ACTIVIDAD.isdeleted = 'N' AND configuracion.con_actividad.codareafuncional=81");
             return predictionRepository.findAll();
-
         } catch (SQLException throwables) {
             return predictionRepository.findAll();
-        }*/
-        return predictionRepository.findAll();
+        }
+
     }
-    /*
+
     public ResultSet executeQuery(String sql) throws SQLException {
 
         Connection connection = DriverManager.getConnection(
@@ -48,7 +47,7 @@ public class PredictionService {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         int count =0;
-        while(resultSet.next()&& count<10){
+        while(resultSet.next()&& count<20){
             Prediction prediction = new Prediction(resultSet);
             predictionRepository.save(prediction);
             count++;
@@ -56,5 +55,5 @@ public class PredictionService {
 
         connection.close();
         return resultSet;
-    }*/
+    }
 }

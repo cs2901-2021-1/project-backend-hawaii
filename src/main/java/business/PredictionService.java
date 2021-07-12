@@ -30,7 +30,7 @@ public class PredictionService {
 
     public List<Prediction> getAllPredictions() {
         try {
-            ResultSet resultSet = executeQuery("SELECT IDACTIVIDAD, DESCRIPCIONLARGA FROM CONFIGURACION.CON_ACTIVIDAD INNER JOIN CONFIGURACION.CON_CURSO ON CONFIGURACION.CON_ACTIVIDAD.CODACTIVIDAD = CONFIGURACION.CON_CURSO.CODCURSO WHERE CONFIGURACION.CON_ACTIVIDAD.isdeleted = 'N' AND configuracion.con_actividad.codareafuncional=81");
+            ResultSet resultSet = executeQuery("SELECT IDACTIVIDAD, DESCRIPCIONLARGA FROM CONFIGURACION.CON_ACTIVIDAD INNER JOIN CONFIGURACION.CON_CURSO ON CONFIGURACION.CON_ACTIVIDAD.CODACTIVIDAD = CONFIGURACION.CON_CURSO.CODCURSO WHERE CONFIGURACION.CON_ACTIVIDAD.isdeleted = 'N'");
             return predictionRepository.findAll();
         } catch (SQLException throwables) {
             return predictionRepository.findAll();
@@ -46,8 +46,8 @@ public class PredictionService {
                 environment.getProperty("oracle.datasource.password"));
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
-        int count =0;
-        while(resultSet.next()&& count<20){
+        int count = 0;
+        while(resultSet.next() && count<50){
             Prediction prediction = new Prediction(resultSet);
             predictionRepository.save(prediction);
             count++;

@@ -11,6 +11,7 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.cors.*;
+import java.util.Arrays;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 

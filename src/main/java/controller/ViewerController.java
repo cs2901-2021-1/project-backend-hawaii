@@ -10,28 +10,34 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientId;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.logging.Logger;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
+import java.util.Collections;
 
 @RestController
-@RequestMapping("/viewers")
+@RequestMapping("/viewer")
 @CrossOrigin
 public class ViewerController {
 
     @Autowired
     private PredictionService predictionService;
     
-    @GetMapping("/google/callback")
-     public void googleCallback(HttpServletResponse response) throws IOException {
+    @GetMapping("/auth")
+     public void authenticate(HttpServletResponse response) throws IOException {
          response.sendRedirect("https://cs.mrg.com.pe/app-sec02-group02/#/");
      }
 
     @GetMapping
-    public List<Prediction> getAllPrediction() {
-        return predictionService.getAllPredictions();
+    public ResponseEntity<?> getAllPrediction(Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("error", "unauthorized"));
+        }
+        return ResponseEntity.ok(predictionService.getAllPredictions());
     }
     
     

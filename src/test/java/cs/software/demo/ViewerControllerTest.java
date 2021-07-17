@@ -1,6 +1,5 @@
 package cs.software.demo;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +23,6 @@ public class ViewerControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
-
-//    @Before
-//    public void setup() {
-//    }
 
     @Test
     public void getAllPrediction() throws Exception {

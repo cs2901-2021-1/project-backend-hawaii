@@ -23,12 +23,7 @@ public class ViewerController {
     private PredictionService predictionService;
 
     @GetMapping
-    public List<Prediction> getAllPrediction(){
+    public List<Prediction> getAllPrediction() {
         return predictionService.getAllPredictions();
     }
-
-
-
-
-
 }

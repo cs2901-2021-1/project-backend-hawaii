@@ -21,9 +21,16 @@ public class ViewerController {
 
     @Autowired
     private PredictionService predictionService;
+    
+    @GetMapping("/google/callback")
+     public void googleCallback(HttpServletResponse response) throws IOException {
+         response.sendRedirect("https://cs.mrg.com.pe/app-sec02-group02/#/");
+     }
 
     @GetMapping
     public List<Prediction> getAllPrediction() {
         return predictionService.getAllPredictions();
     }
+    
+    
 }

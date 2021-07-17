@@ -12,7 +12,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .httpBasic().disable()
             .antMatcher("/**").authorizeRequests()
-            .antMatchers("/viewers/google/callback").authenticated()
+            .antMatchers("/viewers/**").authenticated()
             .anyRequest().permitAll()
             .and()
             .oauth2Login();

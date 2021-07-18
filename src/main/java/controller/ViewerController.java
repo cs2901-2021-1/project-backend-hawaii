@@ -6,6 +6,7 @@ import business.custom_exceptions.CustomNotFoundException;
 import data.dtos.PredictionDTO;
 import data.entities.Prediction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientId;
@@ -45,11 +46,12 @@ public class ViewerController {
     }
 
     @GetMapping("/principal")
-    public ResponseEntity<?> getName(OAuth2User principal){
-        if (principal == null ) {
+    public ResponseEntity<?> getName(@AuthenticationPrincipal OAuth2User user) {
+        if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("error", "unauthorized"));
         }
-        return ResponseEntity.ok(principal.getAttributes().get("email"));
+        return ResponseEntity.ok(user.getAttributes().get("email"));
     }
+
 
 }

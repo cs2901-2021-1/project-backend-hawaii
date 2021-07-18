@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.logging.Logger;
 import java.io.IOException;
@@ -31,12 +33,14 @@ public class ViewerController {
 
     @Autowired
     private PredictionService predictionService;
+    @Autowired
+    private AuthorizationService authorizationService ;
     
     @GetMapping("/auth")
      public void authenticate(HttpServletResponse response) throws IOException {
          response.sendRedirect("https://cs.mrg.com.pe/app-sec02-group02/#/proyecciones");
      }
-
+    /*
     @GetMapping
     public ResponseEntity<?> getAllPrediction(Principal principal) {
         if (principal == null ) {
@@ -44,14 +48,13 @@ public class ViewerController {
         }
         return ResponseEntity.ok(predictionService.getAllPredictions());
     }
+    */
 
-    @GetMapping("/principal")
-    public ResponseEntity<?> getName(@AuthenticationPrincipal OAuth2User user) {
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("error", "unauthorized"));
-        }
-        return ResponseEntity.ok(user.getAttributes().get("email"));
+
+    @GetMapping
+    public ResponseEntity<?> getAllPrediction(@AuthenticationPrincipal OAuth2User user) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method getAllPredictions = PredictionService.class.getMethod("getAllPredictions");
+        return authorizationService.executeIfViewer(user, predictionService, getAllPredictions);
     }
-
 
 }

@@ -36,11 +36,18 @@ public class ViewerController {
 
     @GetMapping
     public ResponseEntity<?> getAllPrediction(Principal principal) {
-        if (principal == null) {
+        if (principal == null ) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("error", "unauthorized"));
         }
         return ResponseEntity.ok(predictionService.getAllPredictions());
     }
-    
-    
+
+    @GetMapping("/principal")
+    public ResponseEntity<?> getName(Principal principal){
+        if (principal == null ) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("error", "unauthorized"));
+        }
+        return ResponseEntity.ok(principal.getName());
+    }
+
 }

@@ -7,25 +7,22 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "viewer")
-public class Viewer {
+@Table(name = "TI")
+public class TI {
     @Id
     @Column(name = "email",updatable = false)
     private String email;
 
-
-    public Viewer(String email, String fullName) {
+    public TI(String email, String fullName) {
         this.email = email;
     }
 
-    public Viewer() {}
+    public TI() {}
 
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
-
 }

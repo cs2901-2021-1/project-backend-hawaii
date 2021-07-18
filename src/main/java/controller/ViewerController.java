@@ -41,16 +41,6 @@ public class ViewerController {
      public void authenticate(HttpServletResponse response) throws IOException {
          response.sendRedirect("https://cs.mrg.com.pe/app-sec02-group02/#/proyecciones");
      }
-    /*
-    @GetMapping
-    public ResponseEntity<?> getAllPrediction(Principal principal) {
-        if (principal == null ) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("error", "unauthorized"));
-        }
-        return ResponseEntity.ok(predictionService.getAllPredictions());
-    }
-    */
-
 
     @GetMapping
     public List<Prediction> getAllPrediction(@AuthenticationPrincipal OAuth2User user) throws UnauthorizeException {

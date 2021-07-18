@@ -3,6 +3,7 @@ package controller;
 import business.AuthorizationService;
 import business.PredictionService;
 import business.custom_exceptions.CustomNotFoundException;
+import business.custom_exceptions.UnauthorizeException;
 import data.dtos.PredictionDTO;
 import data.entities.Prediction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,9 +53,9 @@ public class ViewerController {
 
 
     @GetMapping
-    public ResponseEntity<?> getAllPrediction(@AuthenticationPrincipal OAuth2User user) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method getAllPredictions = PredictionService.class.getMethod("getAllPredictions");
-        return authorizationService.executeIfViewer(user, predictionService, getAllPredictions);
+    public List<Prediction> getAllPrediction(@AuthenticationPrincipal OAuth2User user) throws UnauthorizeException {
+        authorizationService.authorizeViewer(user);
+        return predictionService.getAllPredictions();
     }
 
 }

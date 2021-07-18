@@ -1,6 +1,8 @@
 package business;
 
 
+import business.custom_exceptions.CustomNotFoundException;
+import business.custom_exceptions.UnauthorizeException;
 import data.dtos.ViewerDTO;
 import data.entities.Viewer;
 import data.repositories.ViewerRepository;
@@ -31,21 +33,9 @@ public class AuthorizationService{
         return viewerRepository.save(viewer);
     }
 
-    public ResponseEntity<?> executeIfViewer(OAuth2User user, Object object, Method method) throws InvocationTargetException, IllegalAccessException {
-        if(user != null && viewerRepository.findById((String)user.getAttributes().get("email")).isPresent()){
-            return (ResponseEntity<?>) method.invoke(object);
+    public void authorizeViewer(OAuth2User user) {
+        if(user == null || viewerRepository.findById((String)user.getAttributes().get("email")).isEmpty()){
+            throw new UnauthorizeException("Unauthorized");
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("error", "unauthorized"));
     }
-
-    /*
-    public ResponseEntity<?> executeIfViewer(OAuth2User user, Function<Object, Object> function) {
-        if(user != null && viewerRepository.findById((String)user.getAttributes().get("email")).isPresent()){
-            return function.apply()
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("error", "unauthorized"));
-    }
-
-     */
-
 }

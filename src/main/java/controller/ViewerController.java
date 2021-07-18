@@ -7,7 +7,9 @@ import data.dtos.PredictionDTO;
 import data.entities.Prediction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientId;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -43,11 +45,11 @@ public class ViewerController {
     }
 
     @GetMapping("/principal")
-    public ResponseEntity<?> getName(Principal principal){
+    public ResponseEntity<?> getName(OAuth2User principal){
         if (principal == null ) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("error", "unauthorized"));
         }
-        return ResponseEntity.ok(principal.getName());
+        return ResponseEntity.ok(principal.getAttributes().get("email"));
     }
 
 }

@@ -20,7 +20,7 @@ import java.security.Principal;
 import java.util.Collections;
 
 @RestController
-@RequestMapping("/viewer")
+@RequestMapping("/viewers")
 @CrossOrigin
 public class ViewerController {
 

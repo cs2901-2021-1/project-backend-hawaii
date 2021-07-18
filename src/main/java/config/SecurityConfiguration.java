@@ -12,7 +12,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .httpBasic().disable()
             .antMatcher("/**").authorizeRequests()
-            .antMatchers("/viewers/**").authenticated()
+            .antMatchers("/viewers/auth").authenticated()
             .anyRequest().permitAll()
             .and()
             .oauth2Login();

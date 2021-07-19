@@ -1,7 +1,8 @@
-package cs.software.demo;
+package controller;
 
 import controller.ViewerController;
 import cs.software.demo.OAuthUtils;
+import cs.software.demo.ProjectionApplication;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,28 +23,30 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
+@SpringBootTest(classes = ProjectionApplication.class)
+@AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
-@WebMvcTest(ViewerController.class)
 public class ViewerControllerTest {
-    
+
     @Autowired
     private MockMvc mvc;
-    
+
     @MockBean
     private ClientRegistrationRepository clientRegistrationRepository;
-    
+
+
     private OAuth2User principal;
-    
+
     @Before
     public void setUpUser() {
 
         principal = OAuthUtils.createOAuth2User(
-                "Kawaii", "tkawaiiutec@gmail.com");
+                "Team Kawaii", "tkawaiiutec@gmail.com");
     }
 
     @Test
     public void getAllPrediction() throws Exception {
-        mvc.perform(get("/viewers").with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isFound());
+        mvc.perform(get("/viewers").with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isOk());
     }
 }
+

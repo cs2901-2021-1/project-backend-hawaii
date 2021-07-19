@@ -38,8 +38,8 @@ public class PredictionService {
                 environment.getProperty("oracle.datasource.password"));
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
-        int count = 50;
-        while(resultSet.next() && count<100){
+        int count = 0;
+        while(resultSet.next() && count<1){
             Prediction prediction = new Prediction(resultSet);
             predictionRepository.save(prediction);
             count++;

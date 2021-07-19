@@ -39,7 +39,6 @@ public class ViewerControllerTest {
 
     @Test
     public void getAllPrediction() throws Exception {
-        mvc.perform(get("/")
-                .with(authentication(getOauthAuthenticationFor(principal))))).andExpect(status().isFound());
+        mvc.perform(get("/viewers").with(authentication(getOauthAuthenticationFor(principal))))).andExpect(status().isFound());
     }
 }

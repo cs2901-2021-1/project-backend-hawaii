@@ -48,7 +48,7 @@ public class TIController {
     @GetMapping("/update")
     public void setCourses(@AuthenticationPrincipal OAuth2User user) throws SQLException , UnauthorizedException{
         authorizationService.authorizeTI(user);
-        predictionService.setCourses();
+        //predictionService.setCourses();
     }
 
 

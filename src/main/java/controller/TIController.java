@@ -3,8 +3,14 @@ package controller;
 
 import business.AuthorizationService;
 import business.PredictionService;
+import business.custom_exceptions.ConflictException;
+import business.custom_exceptions.NotFoundException;
+import business.custom_exceptions.UnauthorizedException;
 import data.dtos.ViewerDTO;
+import data.entities.Viewer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -20,14 +26,21 @@ public class TIController {
     @Autowired
     private PredictionService predictionService;
 
-    @PostMapping
-    public void addViewer(@RequestBody ViewerDTO viewerDTO){
-        authorizationService.addViewer(viewerDTO);
+    @PostMapping("/add")
+    public Viewer addViewer(@RequestBody ViewerDTO viewerDTO, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, ConflictException {
+        authorizationService.authorizeTI(user);
+        return authorizationService.addViewer(viewerDTO);
     }
 
+    @PostMapping("/delete")
+    public void deleteViewer(@RequestBody ViewerDTO viewerDTO, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, NotFoundException {
+        authorizationService.authorizeTI(user);
+        authorizationService.deleteViewer(viewerDTO);
+    }
 
     @GetMapping("/courses")
-    public void setCourses() throws SQLException {
+    public void setCourses(@AuthenticationPrincipal OAuth2User user) throws SQLException , UnauthorizedException{
+        authorizationService.authorizeTI(user);
         predictionService.setCourses();
     }
 

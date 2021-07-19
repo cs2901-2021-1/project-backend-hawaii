@@ -1,20 +1,14 @@
 package business;
 
-import business.custom_exceptions.CustomNotFoundException;
-import business.custom_exceptions.TooLongException;
-import data.dtos.PredictionDTO;
 import data.entities.Prediction;
 import data.repositories.PredictionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 
 import javax.transaction.Transactional;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

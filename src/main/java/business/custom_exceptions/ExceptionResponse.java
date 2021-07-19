@@ -16,9 +16,7 @@ public class ExceptionResponse {
         this.status = status;
     }
 
-    public ExceptionResponse(){
-        //DEFAULT CONSTRUCTOR
-    }
+    public ExceptionResponse(){}
 
     public Date getTimestamp() {
         return timestamp;

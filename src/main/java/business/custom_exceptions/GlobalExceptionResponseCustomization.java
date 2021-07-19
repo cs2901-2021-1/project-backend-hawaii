@@ -14,7 +14,7 @@ import java.util.Date;
 @RestController
 public class GlobalExceptionResponseCustomization extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = { CustomNotFoundException.class, TooLongException.class})
+    @ExceptionHandler(value = { NotFoundException.class, TooLongException.class})
     protected ResponseEntity<ExceptionResponse> handleConflict(RuntimeException ex, WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);

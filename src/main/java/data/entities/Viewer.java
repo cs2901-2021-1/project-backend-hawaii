@@ -14,7 +14,7 @@ public class Viewer {
     private String email;
 
 
-    public Viewer(String email, String fullName) {
+    public Viewer(String email) {
         this.email = email;
     }
 

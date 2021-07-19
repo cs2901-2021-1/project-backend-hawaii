@@ -1,6 +1,4 @@
 package controller;
-
-
 import business.AuthorizationService;
 import business.PredictionService;
 import business.custom_exceptions.ConflictException;
@@ -34,9 +32,9 @@ public class TIController {
     }
 
     @PostMapping("/add")
-    public Viewer addViewer(@RequestBody ViewerDTO viewerDTO, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, ConflictException {
+    public void addViewer(@RequestBody ViewerDTO viewerDTO, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, ConflictException {
         authorizationService.authorizeTI(user);
-        return authorizationService.addViewer(viewerDTO);
+        authorizationService.addViewer(viewerDTO);
     }
 
     @PostMapping("/del")
@@ -50,7 +48,5 @@ public class TIController {
         authorizationService.authorizeTI(user);
         //predictionService.setCourses();
     }
-
-
 
 }

@@ -13,7 +13,7 @@ public class TI {
     @Column(name = "email",updatable = false)
     private String email;
 
-    public TI(String email, String fullName) {
+    public TI(String email) {
         this.email = email;
     }
 

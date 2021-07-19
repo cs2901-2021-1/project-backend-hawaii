@@ -39,13 +39,13 @@ public class TIController {
         return authorizationService.addViewer(viewerDTO);
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/del")
     public void deleteViewer(@RequestBody ViewerDTO viewerDTO, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, NotFoundException {
         authorizationService.authorizeTI(user);
         authorizationService.deleteViewer(viewerDTO);
     }
 
-    @GetMapping("/courses")
+    @GetMapping("/update")
     public void setCourses(@AuthenticationPrincipal OAuth2User user) throws SQLException , UnauthorizedException{
         authorizationService.authorizeTI(user);
         predictionService.setCourses();

@@ -16,7 +16,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .httpBasic().disable()
             .antMatcher("/**").authorizeRequests()
-            .antMatchers("/viewers/auth").authenticated()
+            .antMatchers("/viewers/auth", "/ti/auth").authenticated()
             .anyRequest().permitAll()
             .and()
             .oauth2Login();

@@ -12,6 +12,8 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
 import static cs.software.demo.OAuthUtils.getOauthAuthenticationFor;
 import static java.lang.System.lineSeparator;
@@ -19,8 +21,9 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@SpringBootTest
 @RunWith(SpringRunner.class)
-@WebMvcTest(ViewerController.class)
+@AutoConfigureMockMvc
 public class ViewerControllerTest {
     
     @Autowired

@@ -29,8 +29,8 @@ public class ViewerControllerTest {
     @Autowired
     private MockMvc mvc;
     
-    //@MockBean
-    //private ClientRegistrationRepository clientRegistrationRepository;
+    @MockBean
+    private ClientRegistrationRepository clientRegistrationRepository;
     
     private OAuth2User principal;
     

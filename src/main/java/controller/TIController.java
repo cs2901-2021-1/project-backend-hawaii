@@ -5,7 +5,6 @@ import business.custom_exceptions.ConflictException;
 import business.custom_exceptions.NotFoundException;
 import business.custom_exceptions.UnauthorizedException;
 import data.dtos.ViewerDTO;
-import data.entities.Viewer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;

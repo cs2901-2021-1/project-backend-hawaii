@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 @RestController
 @RequestMapping("/ti")
@@ -43,9 +42,9 @@ public class TIController {
     }
 
     @GetMapping("/update")
-    public void setCourses(@AuthenticationPrincipal OAuth2User user) throws SQLException , UnauthorizedException{
+    public void setCourses(@AuthenticationPrincipal OAuth2User user) throws UnauthorizedException{
         authorizationService.authorizeTI(user);
-        //predictionService.setCourses();
+        //hola predictionService. setCourses()
     }
 
 }

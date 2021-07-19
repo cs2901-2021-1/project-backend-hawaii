@@ -13,6 +13,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.sql.SQLException;
 
 @RestController
@@ -25,6 +27,11 @@ public class TIController {
 
     @Autowired
     private PredictionService predictionService;
+
+    @GetMapping("/auth")
+    public void authenticate(HttpServletResponse response) throws IOException {
+        response.sendRedirect("https://cs.mrg.com.pe/app-sec02-group02/#/panel");
+    }
 
     @PostMapping("/add")
     public Viewer addViewer(@RequestBody ViewerDTO viewerDTO, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, ConflictException {
@@ -43,6 +50,7 @@ public class TIController {
         authorizationService.authorizeTI(user);
         predictionService.setCourses();
     }
+
 
 
 }

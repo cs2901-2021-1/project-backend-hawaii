@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/ti")
@@ -27,6 +28,12 @@ public class TIController {
     @GetMapping("/auth")
     public void authenticate(HttpServletResponse response) throws IOException {
         response.sendRedirect("https://cs.mrg.com.pe/app-sec02-group02/#/panel");
+    }
+
+    @GetMapping
+    public List<ViewerDTO> getViewers(@AuthenticationPrincipal OAuth2User user) throws UnauthorizedException{
+        authorizationService.authorizeTI(user);
+        return authorizationService.getViewers();
     }
 
     @PostMapping("/add")

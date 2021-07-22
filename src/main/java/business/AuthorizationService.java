@@ -13,6 +13,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -53,5 +55,13 @@ public class AuthorizationService{
         if(user == null || tiRepository.findById((String)user.getAttributes().get("email")).isEmpty()){
             throw new UnauthorizedException();
         }
+    }
+    public List<ViewerDTO> getViewers(){
+        List<ViewerDTO> listViewer = new ArrayList<>();
+        for(var item : viewerRepository.findAll()){
+            var dto = new ViewerDTO(item.getEmail());
+            listViewer.add(dto);
+        }
+        return listViewer;
     }
 }

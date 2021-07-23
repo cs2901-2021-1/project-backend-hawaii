@@ -46,9 +46,13 @@ public class AuthorizationService{
     }
 
     public void authorize(OAuth2User user, char type) throws UnauthorizedException{
-        if(user == null || userRepository.findByEmailAndType((String)user.getAttributes().get("email"),type).isEmpty()){
+        if(user == null || userRepository.findById((String)user.getAttributes().get("email")).isEmpty()){
             throw new UnauthorizedException();
         }
+        if(userRepository.findByEmailAndType((String) user.getAttributes().get("email"), type).isEmpty()&&TYPE_ADMIN==type){
+            throw new UnauthorizedException();
+        }
+
     }
 
     public List<UserDTO> getViewers(){

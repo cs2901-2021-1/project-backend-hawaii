@@ -1,13 +1,13 @@
 package data.dtos;
 
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Calendar;
 
 public class UserDTO {
     private String email;
-    private LocalDate dateInsert;
+    private Date dateInsert;
 
-    public UserDTO(String email, LocalDate dateInsert) {
+    public UserDTO(String email, Date dateInsert) {
         this.email = email;
         this.dateInsert = dateInsert;
     }
@@ -20,11 +20,11 @@ public class UserDTO {
         this.email = email;
     }
 
-    public LocalDate getDateInsert() {
+    public Date getDateInsert() {
         return dateInsert;
     }
 
-    public void setDateInsert(LocalDate dateInsert) {
+    public void setDateInsert(Date dateInsert) {
         this.dateInsert = dateInsert;
     }
 }

@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 import static cs.software.demo.OAuthUtils.getOauthAuthenticationFor;
@@ -84,7 +85,7 @@ class ProjectionApplicationTests {
 	void addViewerForbidden() throws Exception {
 		var principal = OAuthUtils.createOAuth2User("Team Kawaii", "tkawaiiutec@gmail.com");
 		mvc.perform(post("/ti/add")
-				.content(asJsonString(new UserDTO("jose.huby@utec.edu.pe", LocalDate.now())))
+				.content(asJsonString(new UserDTO("jose.huby@utec.edu.pe", new Date(LocalDate.now().getYear(),LocalDate.now().getMonthValue(),LocalDate.now().getDayOfMonth()))))
 				.contentType(MediaType.APPLICATION_JSON)
 				.with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isForbidden());
 	}
@@ -93,7 +94,7 @@ class ProjectionApplicationTests {
 	void deleteViewerForbidden() throws Exception {
 		var principal = OAuthUtils.createOAuth2User("Team Kawaii", "tkawaiiutec@gmail.com");
 		mvc.perform(post("/ti/add")
-				.content(asJsonString(new UserDTO("jose.huby@utec.edu.pe",LocalDate.now())))
+				.content(asJsonString(new UserDTO("jose.huby@utec.edu.pe",new Date(LocalDate.now().getYear(),LocalDate.now().getMonthValue(),LocalDate.now().getDayOfMonth()))))
 				.contentType(MediaType.APPLICATION_JSON)
 				.with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isForbidden());
 	}

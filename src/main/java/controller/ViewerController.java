@@ -12,6 +12,8 @@ import java.util.List;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 
+import static config.GlobalConstants.TYPE_VIEWER;
+
 @RestController
 @RequestMapping("/viewers")
 @CrossOrigin
@@ -29,7 +31,7 @@ public class ViewerController {
 
     @GetMapping
     public List<Prediction> getAllPrediction(@AuthenticationPrincipal OAuth2User user) throws UnauthorizedException {
-        authorizationService.authorizeViewer(user);
+        authorizationService.authorize(user, TYPE_VIEWER);
         return predictionService.getAllPredictions();
     }
 

@@ -4,10 +4,9 @@ package business;
 import business.custom_exceptions.ConflictException;
 import business.custom_exceptions.NotFoundException;
 import business.custom_exceptions.UnauthorizedException;
-import data.dtos.ViewerDTO;
-import data.entities.Viewer;
-import data.repositories.TIRepository;
-import data.repositories.ViewerRepository;
+import data.dtos.UserDTO;
+import data.entities.User;
+import data.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -17,50 +16,43 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static config.GlobalConstants.TYPE_ADMIN;
+import static config.GlobalConstants.TYPE_VIEWER;
+
 @Service
 @Transactional
 public class AuthorizationService{
 
     @Autowired
-    private ViewerRepository viewerRepository;
+    private UserRepository userRepository;
 
-    @Autowired
-    private TIRepository tiRepository;
-
-
-    public Viewer addViewer(ViewerDTO viewerDTO) throws ConflictException {
-        if(viewerRepository.findById(viewerDTO.getEmail()).isPresent()){
+    public User addViewer(UserDTO userDTO) throws ConflictException {
+        if(userRepository.findById(userDTO.getEmail()).isPresent()){
             throw new ConflictException();
         }
-        var viewer = new Viewer(viewerDTO.getEmail());
-        return viewerRepository.save(viewer);
+        var viewer = new User(userDTO.getEmail(),TYPE_VIEWER);
+        return userRepository.save(viewer);
     }
 
 
-    public void deleteViewer(ViewerDTO viewerDTO) throws NotFoundException {
-        Optional<Viewer> viewer = viewerRepository.findById(viewerDTO.getEmail());
-        if(viewer.isEmpty()){
+    public void deleteViewer(UserDTO userDTO) throws NotFoundException {
+        Optional<User> user = userRepository.findById(userDTO.getEmail());
+        if(user.isEmpty()){
             throw new NotFoundException();
         }
-        viewerRepository.delete(viewer.get());
+        userRepository.delete(user.get());
     }
 
-    public void authorizeViewer(OAuth2User user) throws UnauthorizedException{
-        if(user == null || viewerRepository.findById((String)user.getAttributes().get("email")).isEmpty()){
+    public void authorize(OAuth2User user, char type) throws UnauthorizedException{
+        if(user == null || userRepository.findByEmailAndType((String)user.getAttributes().get("email"),type).isEmpty()){
             throw new UnauthorizedException();
         }
     }
 
-    public void authorizeTI(OAuth2User user) throws UnauthorizedException{
-        if(user == null || tiRepository.findById((String)user.getAttributes().get("email")).isEmpty()){
-            throw new UnauthorizedException();
-        }
-    }
-    public List<ViewerDTO> getViewers(){
-        List<ViewerDTO> listViewer = new ArrayList<>();
-        for(var item : viewerRepository.findAll()){
-            var dto = new ViewerDTO(item.getEmail());
-            listViewer.add(dto);
+    public List<UserDTO> getViewers(){
+        List<UserDTO> listViewer = new ArrayList<>();
+        for(var item :  userRepository.findByType(TYPE_VIEWER)) {
+            listViewer.add(new UserDTO(item.getEmail(), item.getDateInsert()));
         }
         return listViewer;
     }

@@ -4,7 +4,7 @@ import business.PredictionService;
 import business.custom_exceptions.ConflictException;
 import business.custom_exceptions.NotFoundException;
 import business.custom_exceptions.UnauthorizedException;
-import data.dtos.ViewerDTO;
+import data.dtos.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+
+import static config.GlobalConstants.TYPE_ADMIN;
 
 @RestController
 @RequestMapping("/ti")
@@ -31,26 +33,27 @@ public class TIController {
     }
 
     @GetMapping
-    public List<ViewerDTO> getViewers(@AuthenticationPrincipal OAuth2User user) throws UnauthorizedException{
-        authorizationService.authorizeTI(user);
+    public List<UserDTO> getViewers(@AuthenticationPrincipal OAuth2User user) throws UnauthorizedException{
+        authorizationService.authorize(user,TYPE_ADMIN);
         return authorizationService.getViewers();
     }
 
     @PostMapping("/add")
-    public void addViewer(@RequestBody ViewerDTO viewerDTO, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, ConflictException {
-        authorizationService.authorizeTI(user);
-        authorizationService.addViewer(viewerDTO);
+    public void addViewer(@RequestBody UserDTO userDTO, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, ConflictException {
+        authorizationService.authorize(user,TYPE_ADMIN);
+
+        authorizationService.addViewer(userDTO);
     }
 
     @PostMapping("/del")
-    public void deleteViewer(@RequestBody ViewerDTO viewerDTO, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, NotFoundException {
-        authorizationService.authorizeTI(user);
-        authorizationService.deleteViewer(viewerDTO);
+    public void deleteViewer(@RequestBody UserDTO userDTO, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, NotFoundException {
+        authorizationService.authorize(user,TYPE_ADMIN);
+        authorizationService.deleteViewer(userDTO);
     }
 
     @GetMapping("/update")
     public void setCourses(@AuthenticationPrincipal OAuth2User user) throws UnauthorizedException{
-        authorizationService.authorizeTI(user);
+        authorizationService.authorize(user,TYPE_ADMIN);
         //hola predictionService. setCourses()
     }
 

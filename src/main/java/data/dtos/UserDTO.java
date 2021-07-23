@@ -1,10 +1,15 @@
 package data.dtos;
 
-public class ViewerDTO {
-    private String email;
+import java.time.LocalDate;
+import java.util.Calendar;
 
-    public ViewerDTO(String email) {
+public class UserDTO {
+    private String email;
+    private LocalDate dateInsert;
+
+    public UserDTO(String email, LocalDate dateInsert) {
         this.email = email;
+        this.dateInsert = dateInsert;
     }
 
     public String getEmail() {
@@ -13,5 +18,13 @@ public class ViewerDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public LocalDate getDateInsert() {
+        return dateInsert;
+    }
+
+    public void setDateInsert(LocalDate dateInsert) {
+        this.dateInsert = dateInsert;
     }
 }

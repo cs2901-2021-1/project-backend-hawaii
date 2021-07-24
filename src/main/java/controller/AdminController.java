@@ -20,7 +20,7 @@ import static config.GlobalConstants.TYPE_ADMIN;
 @RestController
 @RequestMapping("/ti")
 @CrossOrigin
-public class TIController {
+public class AdminController {
 
     @Autowired
     private AuthorizationService authorizationService;

@@ -4,7 +4,6 @@ package business;
 import business.custom_exceptions.ConflictException;
 import business.custom_exceptions.NotFoundException;
 import business.custom_exceptions.UnauthorizedException;
-import data.dtos.UserDTO;
 import data.entities.User;
 import data.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,17 +25,17 @@ public class AuthorizationService{
     @Autowired
     private UserRepository userRepository;
 
-    public User addViewer(UserDTO userDTO) throws ConflictException {
-        if(userRepository.findById(userDTO.getEmail()).isPresent()){
+    public User addViewer(String email) throws ConflictException {
+        if(userRepository.findById(email).isPresent()){
             throw new ConflictException();
         }
-        var viewer = new User(userDTO.getEmail(),TYPE_VIEWER);
+        var viewer = new User(email,TYPE_VIEWER);
         return userRepository.save(viewer);
     }
 
 
-    public void deleteViewer(UserDTO userDTO) throws NotFoundException {
-        Optional<User> user = userRepository.findById(userDTO.getEmail());
+    public void deleteViewer(String email) throws NotFoundException {
+        Optional<User> user = userRepository.findById(email);
         if(user.isEmpty()){
             throw new NotFoundException();
         }
@@ -53,7 +50,8 @@ public class AuthorizationService{
         if(userOptional.isEmpty()){
             throw new UnauthorizedException();
         }
-        if(userOptional.get().getType() != type &&TYPE_ADMIN!=type){
+        char typeOptional = userOptional.get().getType();
+        if(typeOptional != type &&TYPE_ADMIN!=typeOptional){
             throw new UnauthorizedException();
         }
     }

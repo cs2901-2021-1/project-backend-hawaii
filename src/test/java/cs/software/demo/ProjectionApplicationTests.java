@@ -4,8 +4,6 @@ import business.custom_exceptions.ConflictException;
 import business.custom_exceptions.NotFoundException;
 import business.custom_exceptions.UnauthorizedException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import data.dtos.UserDTO;
-import data.entities.Prediction;
 import data.entities.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -83,22 +81,31 @@ class ProjectionApplicationTests {
 	}
 
 	@Test
-	void addViewerForbidden() throws Exception {
+	void addDeleteViewer() throws Exception {
 		var principal = OAuthUtils.createOAuth2User("Team Kawaii", "tkawaiiutec@gmail.com");
-		mvc.perform(post("/ti/add")
-				.content(asJsonString(new User("jose.huby@utec.edu.pe", new Date(LocalDate.now().getYear(),LocalDate.now().getMonthValue(),LocalDate.now().getDayOfMonth()))))
-				.contentType(MediaType.APPLICATION_JSON)
-				.with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isForbidden());
+		mvc.perform(get("/ti/add?email=obama@gmail.com")
+				.with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isOk());
+
+		mvc.perform(get("/ti/add?email=obama@gmail.com")
+				.with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isConflict());
+
+		mvc.perform(get("/ti/del?email=obama@gmail.com")
+				.with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isOk());
+
+		mvc.perform(get("/ti/del?email=obama@gmail.com")
+				.with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isNotFound());
 	}
 
 	@Test
-	void deleteViewerForbidden() throws Exception {
-		var principal = OAuthUtils.createOAuth2User("Team Kawaii", "tkawaiiutec@gmail.com");
-		mvc.perform(post("/ti/add")
-				.content(asJsonString(new User("jose.huby@utec.edu.pe",new Date(LocalDate.now().getYear(),LocalDate.now().getMonthValue(),LocalDate.now().getDayOfMonth()))))
-				.contentType(MediaType.APPLICATION_JSON)
-				.with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isForbidden());
+	void addDeleteViewerUnauthorized() throws Exception {
+		var principal = OAuthUtils.createOAuth2User("Team Kawaii", "obama@gmail.com");
+		mvc.perform(get("/ti/add?email=obama@gmail.com")
+				.with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isUnauthorized());
+		mvc.perform(get("/ti/del?email=obama@gmail.com")
+				.with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isUnauthorized());
 	}
+
+
 
 	@Test
 	void testExceptions(){

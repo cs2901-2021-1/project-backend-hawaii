@@ -4,7 +4,6 @@ import business.PredictionService;
 import business.custom_exceptions.ConflictException;
 import business.custom_exceptions.NotFoundException;
 import business.custom_exceptions.UnauthorizedException;
-import data.dtos.UserDTO;
 import data.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -39,16 +38,16 @@ public class AdminController {
         return authorizationService.getViewers();
     }
 
-    @PostMapping("/add")
-    public User addViewer(@RequestBody UserDTO userDTO, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, ConflictException {
+    @GetMapping("/add")
+    public User addViewer(@RequestParam String email, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, ConflictException {
         authorizationService.authorize(user,TYPE_ADMIN);
-        return authorizationService.addViewer(userDTO);
+        return authorizationService.addViewer(email);
     }
 
-    @PostMapping("/del")
-    public void deleteViewer(@RequestBody UserDTO userDTO, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, NotFoundException {
+    @GetMapping("/del")
+    public void deleteViewer(@RequestParam String email, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, NotFoundException {
         authorizationService.authorize(user,TYPE_ADMIN);
-        authorizationService.deleteViewer(userDTO);
+        authorizationService.deleteViewer(email);
     }
 
     @GetMapping("/update")

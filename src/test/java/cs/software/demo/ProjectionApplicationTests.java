@@ -6,6 +6,7 @@ import business.custom_exceptions.UnauthorizedException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import data.dtos.UserDTO;
 import data.entities.Prediction;
+import data.entities.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -85,7 +86,7 @@ class ProjectionApplicationTests {
 	void addViewerForbidden() throws Exception {
 		var principal = OAuthUtils.createOAuth2User("Team Kawaii", "tkawaiiutec@gmail.com");
 		mvc.perform(post("/ti/add")
-				.content(asJsonString(new UserDTO("jose.huby@utec.edu.pe", new Date(LocalDate.now().getYear(),LocalDate.now().getMonthValue(),LocalDate.now().getDayOfMonth()))))
+				.content(asJsonString(new User("jose.huby@utec.edu.pe", new Date(LocalDate.now().getYear(),LocalDate.now().getMonthValue(),LocalDate.now().getDayOfMonth()))))
 				.contentType(MediaType.APPLICATION_JSON)
 				.with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isForbidden());
 	}
@@ -94,7 +95,7 @@ class ProjectionApplicationTests {
 	void deleteViewerForbidden() throws Exception {
 		var principal = OAuthUtils.createOAuth2User("Team Kawaii", "tkawaiiutec@gmail.com");
 		mvc.perform(post("/ti/add")
-				.content(asJsonString(new UserDTO("jose.huby@utec.edu.pe",new Date(LocalDate.now().getYear(),LocalDate.now().getMonthValue(),LocalDate.now().getDayOfMonth()))))
+				.content(asJsonString(new User("jose.huby@utec.edu.pe",new Date(LocalDate.now().getYear(),LocalDate.now().getMonthValue(),LocalDate.now().getDayOfMonth()))))
 				.contentType(MediaType.APPLICATION_JSON)
 				.with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isForbidden());
 	}

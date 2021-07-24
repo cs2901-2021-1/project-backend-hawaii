@@ -55,10 +55,10 @@ public class AuthorizationService{
 
     }
 
-    public List<UserDTO> getViewers(){
-        List<UserDTO> listViewer = new ArrayList<>();
+    public List<User> getViewers(){
+        List<User> listViewer = new ArrayList<>();
         for(var item :  userRepository.findByType(TYPE_VIEWER)) {
-            listViewer.add(new UserDTO(item.getEmail(), item.getDateInsert()));
+            listViewer.add(new User(item.getEmail(),item.getDateInsert()));
         }
         return listViewer;
     }

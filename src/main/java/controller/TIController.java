@@ -5,6 +5,7 @@ import business.custom_exceptions.ConflictException;
 import business.custom_exceptions.NotFoundException;
 import business.custom_exceptions.UnauthorizedException;
 import data.dtos.UserDTO;
+import data.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -33,16 +34,15 @@ public class TIController {
     }
 
     @GetMapping
-    public List<UserDTO> getViewers(@AuthenticationPrincipal OAuth2User user) throws UnauthorizedException{
+    public List<User> getViewers(@AuthenticationPrincipal OAuth2User user) throws UnauthorizedException{
         authorizationService.authorize(user,TYPE_ADMIN);
         return authorizationService.getViewers();
     }
 
     @PostMapping("/add")
-    public void addViewer(@RequestBody UserDTO userDTO, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, ConflictException {
+    public User addViewer(@RequestBody UserDTO userDTO, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, ConflictException {
         authorizationService.authorize(user,TYPE_ADMIN);
-
-        authorizationService.addViewer(userDTO);
+        return authorizationService.addViewer(userDTO);
     }
 
     @PostMapping("/del")

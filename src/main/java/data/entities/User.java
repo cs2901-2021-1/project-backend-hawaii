@@ -3,6 +3,8 @@ package data.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
+
 import static config.GlobalConstants.TYPE_USER_LENGTH;
 
 @Entity
@@ -19,7 +21,13 @@ public class User{
     private Date dateInsert;
 
     public User(String email, char type) {
+        this.dateInsert = new Date(LocalDate.now().getYear(),LocalDate.now().getMonthValue(),LocalDate.now().getMonthValue());
         this.type = type;
+        this.email = email;
+    }
+
+    public User(String email, Date date){
+        this.dateInsert = date;
         this.email = email;
     }
 

@@ -5,11 +5,9 @@ import java.time.LocalDate;
 
 public class UserDTO {
     private String email;
-    private Date dateInsert;
 
-    public UserDTO(String email, Date dateInsert) {
+    public UserDTO(String email) {
         this.email = email;
-        this.dateInsert = dateInsert;
     }
 
     public String getEmail() {
@@ -20,11 +18,4 @@ public class UserDTO {
         this.email = email;
     }
 
-    public Date getDateInsert() {
-        return dateInsert;
-    }
-
-    public void setDateInsert(Date dateInsert) {
-        this.dateInsert = dateInsert;
-    }
 }

@@ -26,7 +26,7 @@ public class ViewerController {
     
     @GetMapping("/auth")
      public void authenticate(HttpServletResponse response) throws IOException {
-         response.sendRedirect("https://cs.mrg.com.pe/app-sec02-group02/#/proyecciones");
+         response.sendRedirect("https://frontend-hawaii.vercel.app/#/proyecciones");
      }
 
     @GetMapping

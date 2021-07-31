@@ -30,7 +30,7 @@ public class AdminController {
 
     @GetMapping("/auth")
     public void authenticate(HttpServletResponse response) throws IOException {
-        response.sendRedirect("https://frontend-hawaii.vercel.app/#/");
+        response.sendRedirect("https://frontend-hawaii.vercel.app/#/panel");
     }
 
     @GetMapping

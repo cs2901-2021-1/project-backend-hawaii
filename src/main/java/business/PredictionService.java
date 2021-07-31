@@ -31,7 +31,11 @@ public class PredictionService {
 
     @Async
     @Transactional
-    public void updatePredictions() throws SQLException {
+    public void updatePredictions()throws SQLException{
+        updatePredictionsContent();
+    }
+
+    public void updatePredictionsContent() throws SQLException {
         try (var connection = DriverManager.getConnection(Objects.requireNonNull(environment.getProperty("oracle.datasource.url")),environment.getProperty("oracle.datasource.username"),environment.getProperty("oracle.datasource.password"));var statement = connection.createStatement()){
             var periodos = statement.executeQuery("SELECT DISTINCT PER.DESCRIPCIONLARGA FROM PROGRAMACION.PRO_PERIODO  PER WHERE PER.ISDELETED = 'N' AND PER.CODPROGRAMA=1 AND PER.DESCRIPCIONLARGA<>'NI-2016-0' ORDER BY PER.DESCRIPCIONLARGA DESC");
             List<String> periodosList = new ArrayList<>();
@@ -97,4 +101,5 @@ public class PredictionService {
             }
         }
     }
+
 }

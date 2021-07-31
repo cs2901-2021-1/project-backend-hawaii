@@ -1,5 +1,6 @@
 package cs.software.demo;
 
+import business.PredictionService;
 import business.custom_exceptions.ConflictException;
 import business.custom_exceptions.NotFoundException;
 import business.custom_exceptions.UnauthorizedException;
@@ -43,6 +44,9 @@ class ProjectionApplicationTests {
 
 	@Autowired
 	private MockMvc mvc;
+
+	@Autowired
+	private PredictionService predictionService;
 
 	@MockBean
 	private ClientRegistrationRepository clientRegistrationRepository;
@@ -151,13 +155,20 @@ class ProjectionApplicationTests {
 	}*/
 
 	@Test
-	public void updatePredictions() throws Exception{
+	void updatePredictionsPath() throws Exception{
 		var principal = OAuthUtils.createOAuth2User("Team Kawaii", "claudio.echarre@utec.edu.pe");
 		mvc.perform(get("/ti/update").with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isOk());
 	}
 
 	@Test
-	public void entityPrediction() throws Exception{
+	void updatePredictions() throws Exception{
+		predictionService.updatePredictionsContent();
+		Assert.assertTrue(true);
+	}
+
+
+	@Test
+	void entityPrediction() throws Exception{
 		var courseA = new Prediction("CS2901","Ing. de Software",48,0);
 		Prediction courseB = new Prediction();
 		courseB.setCode("CS2901");

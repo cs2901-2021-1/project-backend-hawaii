@@ -33,21 +33,13 @@ public class Prediction {
         this.error = error;
     }
 
-    /*
-    wow public Prediction(ResultSet resultSet)  SQLException
-        wow this.code = resultSet.getString("IDACTIVIDAD")
-        wow this.name = resultSet.getString("DESCRIPCIONLARGA")
-        wow this.nStudent = 0
-        wow this.error = 0
-    */
+
 
     public String getCode() {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+    public void setCode(String code) {this.code = code;}
 
     public String getName() {
         return name;

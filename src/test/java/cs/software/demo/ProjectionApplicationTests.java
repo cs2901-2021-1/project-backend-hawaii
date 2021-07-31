@@ -4,7 +4,9 @@ import business.custom_exceptions.ConflictException;
 import business.custom_exceptions.NotFoundException;
 import business.custom_exceptions.UnauthorizedException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import data.entities.Prediction;
 import data.entities.User;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -147,6 +149,28 @@ class ProjectionApplicationTests {
 		prediction.setError(prediction.getError());
 		Assertions.assertTrue(true);
 	}*/
+
+	@Test
+	public void updatePredictions() throws Exception{
+		var principal = OAuthUtils.createOAuth2User("Team Kawaii", "claudio.echarre@utec.edu.pe");
+		mvc.perform(get("/ti/update").with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isOk());
+	}
+
+	@Test
+	public void entityPrediction() throws Exception{
+		var courseA = new Prediction("CS2901","Ing. de Software",48,0);
+		Prediction courseB = new Prediction();
+		courseB.setCode("CS2901");
+		courseB.setName("Ing. de Software");
+		courseB.setnStudent(48);
+		courseB.setError(0);
+		Assertions.assertEquals(courseA.getCode(), courseB.getCode());
+		Assertions.assertEquals(courseA.getError(), courseB.getError());
+		Assertions.assertEquals(courseA.getName(), courseB.getName());
+		Assertions.assertEquals(courseA.getnStudent(), courseB.getnStudent());
+	}
+
+
 
 	public static String asJsonString(final Object obj) {
 		try {

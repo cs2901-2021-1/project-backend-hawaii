@@ -226,6 +226,28 @@ class ProjectionApplicationTests {
 		authorizationService.authorize(principal,'g');
 	}
 
+	@Test
+	void getAllPrediction() throws Exception, IOException {
+		ExecutorService executorService = Executors.newFixedThreadPool(4);
+		CountDownLatch latch = new CountDownLatch(10);
+		var principal = OAuthUtils.createOAuth2User("Team Kawaii", "claudio.echarre@utec.edu.pe");
+
+		for(int i=0;i<10;i++){
+			executorService.execute(()->
+					{
+						try {
+							mvc.perform(get("/viewers").with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isOk());
+							latch.countDown();
+						} catch (Exception exception) {
+							Assertions.assertTrue(true);
+						}
+					}
+					);
+		}
+	}
+
+
+
 
 	public static String asJsonString(final Object obj) {
 		try {

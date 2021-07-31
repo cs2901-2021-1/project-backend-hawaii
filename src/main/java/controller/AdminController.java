@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import static config.GlobalConstants.TYPE_ADMIN;
@@ -29,7 +30,7 @@ public class AdminController {
 
     @GetMapping("/auth")
     public void authenticate(HttpServletResponse response) throws IOException {
-        response.sendRedirect("https://cs.mrg.com.pe/app-sec02-group02/#/panel");
+        response.sendRedirect("https://frontend-hawaii.vercel.app/#/");
     }
 
     @GetMapping
@@ -51,9 +52,9 @@ public class AdminController {
     }
 
     @GetMapping("/update")
-    public void setCourses(@AuthenticationPrincipal OAuth2User user) throws UnauthorizedException{
+    public void updatePredictions(@AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, SQLException {
         authorizationService.authorize(user,TYPE_ADMIN);
-        //hola predictionService. setCourses()
+        predictionService.updatePredictions();
     }
 
 }

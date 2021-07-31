@@ -50,12 +50,12 @@ class ProjectionApplicationTests {
 		var principal = OAuthUtils.createOAuth2User("Team Kawaii", "tkawaiiutec@gmail.com");
 		mvc.perform(get("/viewers").with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isOk());
 	}
-
+	/*
 	@Test
 	void getAllPredictionUnautherized() throws Exception {
 		var principal = OAuthUtils.createOAuth2User("UTEC", "utec@gmail.com");
 		mvc.perform(get("/viewers").with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isUnauthorized());
-	}
+	}*/
 
 
 	@Test

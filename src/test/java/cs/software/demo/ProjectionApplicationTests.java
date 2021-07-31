@@ -85,6 +85,12 @@ class ProjectionApplicationTests {
 		var principal = OAuthUtils.createOAuth2User("UTEC", "utec@gmail.com");
 		mvc.perform(get("/ti/update").with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isOk());
 	}
+	@Test
+	void getViewers() throws Exception{
+		var principal = OAuthUtils.createOAuth2User("UTEC", "utec@gmail.com");
+		mvc.perform(get("/ti").with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isOk());
+	}
+
 
 	@Test
 	void addDeleteViewer() throws Exception {
@@ -109,6 +115,16 @@ class ProjectionApplicationTests {
 				.with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isOk());
 		mvc.perform(get("/ti/del?email=obama@gmail.com")
 				.with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isOk());
+	}
+
+	@Test
+	void authenticateViewers() throws Exception {
+		mvc.perform(get("/viewers/auth")).andExpect(status().isFound());
+	}
+
+	@Test
+	void authenticate() throws Exception {
+		mvc.perform(get("/ti/auth")).andExpect(status().isFound());
 	}
 
 

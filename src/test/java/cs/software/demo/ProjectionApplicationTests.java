@@ -1,5 +1,6 @@
 package cs.software.demo;
 
+import business.AuthorizationService;
 import business.PredictionService;
 import business.custom_exceptions.ConflictException;
 import business.custom_exceptions.NotFoundException;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -47,6 +49,9 @@ class ProjectionApplicationTests {
 
 	@Autowired
 	private PredictionService predictionService;
+
+	@Autowired
+	private AuthorizationService authorizationService;
 
 	@MockBean
 	private ClientRegistrationRepository clientRegistrationRepository;
@@ -184,7 +189,7 @@ class ProjectionApplicationTests {
 
 
 	@Test
-	void entityPrediction() throws Exception{
+	void entityPredictionTest() throws Exception{
 		var courseA = new Prediction("CS2901","Ing. de Software",48,0);
 		Prediction courseB = new Prediction();
 		courseB.setCode("CS2901");
@@ -195,6 +200,27 @@ class ProjectionApplicationTests {
 		Assertions.assertEquals(courseA.getError(), courseB.getError());
 		Assertions.assertEquals(courseA.getName(), courseB.getName());
 		Assertions.assertEquals(courseA.getnStudent(), courseB.getnStudent());
+	}
+
+	@Test
+	void entityUserTest(){
+		var user = new User();
+		user.setDateInsert(new Date(2020,5,2));
+		user.setEmail("obama@utec.edu.pe");
+		user.setType('v');
+	}
+
+	@Test
+	void authorizeTest(){
+		var principal = OAuthUtils.createOAuth2User("Team Kawaii", "tkawaiiutec@gmail.com");
+		try {
+			authorizationService.authorize(null,'v');
+		}catch (Exception e){
+			Assertions.assertTrue(true);
+		}
+
+		authorizationService.authorize(principal,'v');
+		authorizationService.authorize(principal,'g');
 	}
 
 

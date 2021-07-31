@@ -35,7 +35,7 @@ public class AdminController {
 
     @GetMapping
     public List<User> getViewers(@AuthenticationPrincipal OAuth2User user) throws UnauthorizedException{
-        authorizationService.authorize(user,TYPE_ADMIN);
+        //authorizationService.authorize(user,TYPE_ADMIN);
         return authorizationService.getViewers();
     }
 

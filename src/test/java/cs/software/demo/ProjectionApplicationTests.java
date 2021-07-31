@@ -38,7 +38,7 @@ class ProjectionApplicationTests {
 	void contextLoads() {
 		Assertions.assertTrue(true);
 	}
-	/*
+
 	@Autowired
 	private MockMvc mvc;
 
@@ -47,7 +47,7 @@ class ProjectionApplicationTests {
 
 	@Test
 	void getAllPredictionOK() throws Exception {
-		var principal = OAuthUtils.createOAuth2User("Team Kawaii", "tkawaiiutec@gmail.com");
+		var principal = OAuthUtils.createOAuth2User("Team Kawaii", "claudio.echarre@utec.edu.pe");
 		mvc.perform(get("/viewers").with(authentication(getOauthAuthenticationFor(principal)))).andExpect(status().isOk());
 	}
 
@@ -127,9 +127,9 @@ class ProjectionApplicationTests {
 			Assertions.assertTrue(true);
 		}
 	}
-
+	/*
 	@Test
-	void testEntities(){/*
+	void testEntities(){
 		var ti = new TI("tkawaiiutec@gmail.com");
 		var email = ti.getEmail();
 		ti.setEmail(email);
@@ -146,11 +146,7 @@ class ProjectionApplicationTests {
 		prediction.setnStudent(prediction.getnStudent());
 		prediction.setError(prediction.getError());
 		Assertions.assertTrue(true);
-	}
-
-
-
-
+	}*/
 
 	public static String asJsonString(final Object obj) {
 		try {
@@ -158,5 +154,5 @@ class ProjectionApplicationTests {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}*/
+	}
 }

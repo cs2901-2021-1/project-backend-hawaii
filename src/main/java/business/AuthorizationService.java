@@ -42,11 +42,13 @@ public class AuthorizationService{
         userRepository.delete(user.get());
     }
 
+    @Transactional
     public void authorize(OAuth2User user, char type) throws UnauthorizedException{
         if(user == null){
             throw new UnauthorizedException();
         }
-        Optional<User> userOptional = userRepository.findById((String)user.getAttributes().get("email"));
+        var correo = (String)user.getAttributes().get("email");
+        Optional<User> userOptional = userRepository.findById(correo);
         if(userOptional.isEmpty()){
             throw new UnauthorizedException();
         }

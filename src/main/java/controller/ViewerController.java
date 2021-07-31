@@ -31,7 +31,7 @@ public class ViewerController {
 
     @GetMapping
     public List<Prediction> getAllPrediction(@AuthenticationPrincipal OAuth2User user) throws UnauthorizedException {
-        //authorizationService.authorize(user, TYPE_VIEWER);
+        authorizationService.authorize(user, TYPE_VIEWER);
         return predictionService.getAllPredictions();
     }
 

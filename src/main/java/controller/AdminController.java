@@ -35,25 +35,25 @@ public class AdminController {
 
     @GetMapping
     public List<User> getViewers(@AuthenticationPrincipal OAuth2User user) throws UnauthorizedException{
-        //authorizationService.authorize(user,TYPE_ADMIN);
+        authorizationService.authorize(user,TYPE_ADMIN);
         return authorizationService.getViewers();
     }
 
     @GetMapping("/add")
     public User addViewer(@RequestParam String email, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, ConflictException {
-        //authorizationService.authorize(user,TYPE_ADMIN);
+        authorizationService.authorize(user,TYPE_ADMIN);
         return authorizationService.addViewer(email);
     }
 
     @GetMapping("/del")
     public void deleteViewer(@RequestParam String email, @AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, NotFoundException {
-        //authorizationService.authorize(user,TYPE_ADMIN);
+        authorizationService.authorize(user,TYPE_ADMIN);
         authorizationService.deleteViewer(email);
     }
 
     @GetMapping("/update")
     public void updatePredictions(@AuthenticationPrincipal OAuth2User user) throws UnauthorizedException, SQLException {
-        //authorizationService.authorize(user,TYPE_ADMIN);
+        authorizationService.authorize(user,TYPE_ADMIN);
         predictionService.updatePredictions();
     }
 
